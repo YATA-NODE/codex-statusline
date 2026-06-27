@@ -1,44 +1,46 @@
 # codex-statusline
 
-A compact Codex TUI status line preset for WSL2 users.
+WSL2 で使う Codex TUI 向けの、コンパクトなステータスライン設定例です。
 
-It shows the model, context usage, 5-hour limit, weekly limit, and context window in one footer line:
+モデル、コンテキスト使用量、5時間制限、週間制限、コンテキストウィンドウをフッターにまとめて表示します。
 
 ```text
 gpt-5.5 default · Context 13% used · 5h 84% left · weekly 71% left · 258K window
 ```
 
-For README screenshots, this footer is too narrow to read comfortably when captured full-width. Prefer showing the text example above, or crop the terminal footer tightly before adding a screenshot.
+この表示は横に長いため、README にフル幅のスクリーンショットを貼ると読みにくくなります。基本的には上のようにテキスト例で示すか、スクリーンショットを使う場合はターミナル下部だけを切り抜くのがおすすめです。
 
-## Requirements
+## 前提
 
-- Codex CLI with TUI status-line support
+- TUI のステータスライン設定に対応した Codex CLI
 - WSL2
-- A Codex config file at `~/.codex/config.toml` inside your WSL2 Linux environment
+- WSL2 の Linux 環境内にある `~/.codex/config.toml`
 
-On WSL2, `~/.codex/config.toml` means the Linux path in your distro, for example:
+WSL2 では、`~/.codex/config.toml` は Windows 側ではなく、利用している Linux ディストリビューション内のパスを指します。
+
+例:
 
 ```text
 /home/<linux-user>/.codex/config.toml
 ```
 
-Do not edit a Windows path such as `C:\Users\<windows-user>\.codex\config.toml` unless that is where your Codex CLI actually reads its config.
+Codex CLI が Windows 側の設定を読んでいる場合を除き、`C:\Users\<windows-user>\.codex\config.toml` のような Windows 側のパスではなく、WSL2 側の設定ファイルを編集してください。
 
-## Install
+## 導入方法
 
-Back up your Codex config:
+まず、既存の Codex 設定をバックアップします。
 
 ```bash
 cp ~/.codex/config.toml ~/.codex/config.toml.bak
 ```
 
-Open the config file:
+設定ファイルを開きます。
 
 ```bash
 nano ~/.codex/config.toml
 ```
 
-Add or update this section:
+次の設定を追加、または既存の `[tui]` セクションを更新してください。
 
 ```toml
 [tui]
@@ -52,30 +54,30 @@ status_line = [
 status_line_use_colors = true
 ```
 
-Restart Codex after saving the file.
+保存後、Codex を再起動してください。
 
-## Alternative: Use `/statusline`
+## `/statusline` で設定する方法
 
-You can also configure the same footer from inside the Codex TUI:
+Codex TUI 内の `/statusline` から同じ内容を設定することもできます。
 
-1. Start Codex.
-2. Run `/statusline`.
-3. Select and order these items:
+1. Codex を起動します。
+2. `/statusline` を実行します。
+3. 次の項目を選び、同じ順番に並べます。
    - `model-with-reasoning`
    - `context-used`
    - `five-hour-limit`
    - `weekly-limit`
    - `context-window-size`
-4. Save the selection.
+4. 選択内容を保存します。
 
-Codex persists the result to `~/.codex/config.toml`.
+保存すると、Codex が `~/.codex/config.toml` に設定を反映します。
 
-## Notes
+## 補足
 
-Codex status lines are configured with built-in item IDs. This preset does not install an external renderer or shell script.
+Codex のステータスラインは、Codex に組み込まれている item ID を並べて設定します。このリポジトリは外部レンダラーやシェルスクリプトをインストールするものではありません。
 
-If your Codex version does not recognize one of the item IDs above, update Codex or run `/statusline` and choose the closest available item from the menu.
+利用中の Codex が上記の item ID を認識しない場合は、Codex を更新するか、`/statusline` のメニューから近い項目を選んでください。
 
-## License
+## ライセンス
 
 MIT
